@@ -8,7 +8,7 @@ namespace Chat.Hubs
   {
     public void Send(string message)
     {
-      Clients.Others.receiveMessage(message);
+      Clients.All.addMessage(message);
     }
   }
 }
