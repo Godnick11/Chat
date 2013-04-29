@@ -1,39 +1,27 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/Layout.cshtml";
+    ViewBag.Title = "Chat";
 }
 
-<!DOCTYPE html>
+@section Scripts
+{
+    @Scripts.Render("~/bundles/signalr")
+    <script src="~/signalr/hubs"></script>
+    @Scripts.Render("~/bundles/chat")
+}
 
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" media="screen">
-</head>
-
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="span8">
-                <form class="form-inline">
-                    <input id="msg" type="text" />
-                    <input id="broadcast" type="button" value="Send" />
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span8"><ul id="messages"></ul></div>
+<div class="container">
+    <div class="row">
+        <div class="span8">
+            <form class="form-inline">
+                <input id="msg" type="text" />
+                <input id="broadcast" type="button" value="Send" />
+            </form>
         </div>
     </div>
-    
-    <div class="script-container">
-        <script src="~/Scripts/jquery-1.9.1.js"></script>
-        <script src="~/Scripts/jquery-ui-1.10.2.js"></script>
-        <script src="~/Scripts/bootstrap.js"></script>
-        <script src="~/Scripts/jquery.signalR-1.0.1.js"></script>
-        <script src="~/signalr/hubs"></script>
-        <script src="~/Scripts/chat.js"></script>
+    <div class="row">
+        <div class="span8">
+            <ul id="messages"></ul>
+        </div>
     </div>
-</body>
-</html>
+</div>

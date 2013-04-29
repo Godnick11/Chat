@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace Chat
@@ -8,11 +9,12 @@ namespace Chat
   {
     protected void Application_Start()
     {
-      AreaRegistration.RegisterAllAreas();
       RouteTable.Routes.MapHubs();
+      AreaRegistration.RegisterAllAreas();
       WebApiConfig.Register(GlobalConfiguration.Configuration);
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
+      BundlesConfig.RegisterBundles(BundleTable.Bundles);
     }
   }
 }
