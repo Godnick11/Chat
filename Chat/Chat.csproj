@@ -79,6 +79,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -156,6 +157,7 @@
     <Compile Include="App_Start\BundlesConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="BackendStorage\Entities\BaseEntity.cs" />
+    <Compile Include="BackendStorage\Entities\User.cs" />
     <Compile Include="BackendStorage\IChatRepository.cs" />
     <Compile Include="BackendStorage\MongoChatRepository.cs" />
     <Compile Include="Controllers\AccountSettingsController.cs" />
@@ -165,9 +167,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Utils\ISecurityManager.cs" />
+    <Compile Include="Utils\ModelConverter.cs" />
+    <Compile Include="Utils\SecurityManager.cs" />
     <Compile Include="Models\LoginUserViewModel.cs" />
     <Compile Include="Models\RegisterUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ConfigurationHelper.cs" />
+    <Compile Include="Utils\IConfigurationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

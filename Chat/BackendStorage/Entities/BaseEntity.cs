@@ -1,9 +1,12 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Chat.BackendStorage.Entities
 {
   public abstract class BaseEntity
   {
-    public ObjectId Id { get; set; }
+    [BsonId]
+    [BsonIgnoreIfDefault]
+    public BsonObjectId Id { get; set; }
   }
 }

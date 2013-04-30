@@ -1,4 +1,5 @@
-﻿using Chat.Models;
+﻿using Chat.BackendStorage;
+using Chat.Models;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -8,6 +9,32 @@ namespace Chat.Controllers
 {
   public class HomeController : Controller
   {
+    private readonly IChatRepository _chatRepository;
+
+    public HomeController(IChatRepository chatRepository)
+    {
+      _chatRepository = chatRepository;
+    }
+
+#if DEBUG
+
+    [HttpGet]
+    public string Test()
+    {
+      var userData = new RegisterUserViewModel
+            {
+              Email = "pupkin@test.test",
+              Password = "password",
+              RepeatPassword = "password",
+              FirstName = "Vasya",
+              LastName = "Pupkin",
+            };
+      _chatRepository.AddNewUser(userData);
+      return "TEST";
+    }
+
+#endif
+
     [HttpGet]
     public ActionResult Index(LoginUserViewModel user)
     {

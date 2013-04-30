@@ -5,7 +5,18 @@ namespace Chat.Models
 {
   public class RegisterUserViewModel
   {
+    [Required(ErrorMessage = "first name is required")]
+    [StringLength(50, ErrorMessage = "too long")]
+    [DisplayName("first name")]
+    public string FirstName { set; get; }
+
+    [Required(ErrorMessage = "first name is required")]
+    [StringLength(50, ErrorMessage = "too long")]
+    [DisplayName("last name")]
+    public string LastName { set; get; }
+
     [Required(ErrorMessage = "email is required")]
+    [StringLength(50, ErrorMessage = "too long")]
     [DisplayName("email")]
     [RegularExpression("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", ErrorMessage = "the email address is invalid")]
     //[Remote()]
