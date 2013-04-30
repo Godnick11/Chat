@@ -19,10 +19,15 @@ namespace Chat
       var chat = new ScriptBundle("~/bundles/chat")
           .Include("~/Scripts/chat.js");
 
+      var jQueryUnobtrusiveValidation = new ScriptBundle("~/bundles/jQuery-unobtrusive-validation")
+          .Include("~/Scripts/jquery.validate.js",
+                  "~/Scripts/jquery.validate.unobtrusive.js");
+
       bundles.Add(jquery);
       bundles.Add(bootstrapjs);
       bundles.Add(signalr);
       bundles.Add(chat);
+      bundles.Add(jQueryUnobtrusiveValidation);
     }
   }
 }

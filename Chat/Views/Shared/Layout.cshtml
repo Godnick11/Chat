@@ -15,9 +15,14 @@
 </head>
 
 <body>
-    @RenderBody()
+    @RenderSection("Header", required: false)
+    <div class="container">
+        @RenderBody()
+    </div>
+    @RenderSection("Footer", required: false)
     <div class="script-container">
         @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jQuery-unobtrusive-validation")
         @Scripts.Render("~/bundles/bootstrapjs")
         @RenderSection("Scripts", required: false)
     </div>

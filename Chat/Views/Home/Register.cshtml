@@ -1,26 +1,18 @@
-﻿@model Chat.Models.LoginUserViewModel
+﻿@model Chat.Models.RegisterUserViewModel
 
 @{
     Layout = "~/Views/Shared/Layout.cshtml";
     ViewBag.Title = "Welcome!";
 }
 
-@section Header
-{
-    <div class="navbar">
-        <div class="navbar-inner">
-        </div>
-    </div>
-}
-
 <div class="row">
-    <div class="span4">
-        @Html.ValidationSummary(excludePropertyErrors: true, message: string.Empty, htmlAttributes: new { @class = "text-error" })
+    <div class="span4 offset1">
+        @Html.ValidationSummary(excludePropertyErrors: true)
     </div>
 </div>
 
 <div class="row">
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         <div class="control-group">
             @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label", type = "email" })
@@ -37,17 +29,24 @@
             @Html.ValidationMessageFor(m => m.Password, validationMessage: string.Empty, htmlAttributes: new { @class = "text-error" })
         </div>
         <div class="control-group">
+            @Html.LabelFor(m => m.RepeatPassword, new { @class = "control-label" })
+            <div class="controls">
+                @Html.PasswordFor(m => m.RepeatPassword, new { placeholder = "password" })
+            </div>
+            @Html.ValidationMessageFor(m => m.RepeatPassword, validationMessage: string.Empty, htmlAttributes: new { @class = "text-error" })
+        </div>
+        <div class="control-group">
             @Html.LabelFor(m => m.RememberMe, new { @class = "control-label" })
             <div class="controls">
                 @Html.CheckBoxFor(m => m.RememberMe)
-                <button type="submit" class="btn btn-success">Login</button>
+                <button type="submit" class="btn btn-success">Register and Login</button>
             </div>
         </div>
     }
 </div>
 
 <div class="row">
-    <div class="span4">
+    <div class="span4 offset1">
         Don't have an account? <a href="@Url.Action("Register")">Register</a>!
     </div>
 </div>

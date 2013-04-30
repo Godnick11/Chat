@@ -2,7 +2,7 @@
 
 namespace Chat.BackendStorage.Entities
 {
-  public class BaseEntity
+  public abstract class BaseEntity
   {
     public ObjectId Id { get; set; }
   }
