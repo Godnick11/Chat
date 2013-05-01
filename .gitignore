@@ -1,9 +1,6 @@
 *.suo
 *.user
 *.ncrunchsolution
-#[Dd]ebug/
-#[Rr]elease/
 _ReSharper*
-[Ee]xpress
 [Bb]in
 [Oo]bj
