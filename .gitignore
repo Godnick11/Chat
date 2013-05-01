@@ -33,9 +33,6 @@
 .builds
 *.dotCover
 
-## TODO: If you have NuGet Package Restore enabled, uncomment this
-#packages/
-
 # Visual C++ cache files
 ipch/
 *.aps
@@ -74,7 +71,6 @@ TestResults
 *.Cache
 ClientBin
 stylecop.*
-~$*
 *.dbmdl
 Generated_Code #added for RIA/Silverlight projects
 
