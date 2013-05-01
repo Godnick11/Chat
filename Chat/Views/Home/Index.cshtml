@@ -23,9 +23,9 @@
     @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         <div class="control-group">
-            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label", type = "email" })
+            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label" })
             <div class="controls">
-                @Html.TextBoxFor(m => m.Email, htmlAttributes: new { placeholder = "email" })
+                @Html.TextBoxFor(m => m.Email, htmlAttributes: new { placeholder = "email", type = "email" })
             </div>
             @Html.ValidationMessageFor(m => m.Email, validationMessage: string.Empty, htmlAttributes: new { @class = "text-error" })
         </div>

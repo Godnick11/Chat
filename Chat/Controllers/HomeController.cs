@@ -4,6 +4,7 @@ using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI;
 
 namespace Chat.Controllers
 {
@@ -45,14 +46,15 @@ namespace Chat.Controllers
     public ActionResult Login(LoginUserViewModel user)
     {
       if (!ModelState.IsValid)
-        RedirectToAction("Index", new { user = user });
+        return RedirectToAction("Index", new { user = user });
 
-      if (!IsCredentialsValid(user.Email, user.Password))
+      if (!_chatRepository.IsCredentialsValid(user.Email, user.Password))
       {
         ModelState.AddModelError(string.Empty, "email/password pair is not valid");
         return RedirectToAction("Index", new { user = user });
       }
 
+      AuthorizeUser(user.Email, user.RememberMe);
       return RedirectToAction("Index", "Chat");
     }
 
@@ -64,30 +66,37 @@ namespace Chat.Controllers
     }
 
     [HttpGet]
-    public ActionResult Register()
+    public ActionResult Register(RegisterUserViewModel user)
     {
-      return View();
+      return View(user);
     }
 
     [HttpPost]
-    public ActionResult Register(RegisterUserViewModel user)
+    public ActionResult RegisterNewUser(RegisterUserViewModel user)
     {
       if (!ModelState.IsValid)
-        RedirectToAction("Index", new { user = user });
-
-      // TODO: save user
+        return RedirectToAction("Register", new { user = user });
+      if (!string.Equals(user.Password, user.RepeatPassword))
+      {
+        ModelState.AddModelError(string.Empty, "passwords don't match");
+        return RedirectToAction("Register", new { user = user });
+      }
+      if (_chatRepository.IsUserRegistered(user.Email))
+      {
+        ModelState.AddModelError("Email", "the email is not available");
+        return RedirectToAction("Register", new { user = user });
+      }
+      _chatRepository.AddNewUser(user);
       AuthorizeUser(user.Email, user.RememberMe);
       return RedirectToAction("Index", "Chat");
     }
 
-    private bool IsCredentialsValid(string email, string password)
+    [HttpGet]
+    [OutputCache(Location = OutputCacheLocation.None, NoStore = true)]
+    public JsonResult IsEmailAvailable(string email)
     {
-      // TODO: check credentials
-      if (false)
-      {
-        return false;
-      }
-      return true;
+      var result = !_chatRepository.IsUserRegistered(email);
+      return Json(result, JsonRequestBehavior.AllowGet);
     }
 
     private void AuthorizeUser(string email, bool rememberMe)

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Chat.Models
 {
@@ -19,7 +20,7 @@ namespace Chat.Models
     [StringLength(50, ErrorMessage = "too long")]
     [DisplayName("email")]
     [RegularExpression("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", ErrorMessage = "the email address is invalid")]
-    //[Remote()]
+    [Remote("IsEmailAvailable", "Home", ErrorMessage = "the email is not available")]
     public string Email { set; get; }
 
     [Required(ErrorMessage = "password is required")]

@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using System;
 
 namespace Chat.BackendStorage
 {
@@ -37,10 +38,24 @@ namespace Chat.BackendStorage
       _database = ConnectToDatabase();
     }
 
+    public bool IsUserRegistered(string email)
+    {
+      email = email.ToLowerInvariant();
+      var query = Query<User>.EQ(u => u.Email, email);
+      var count = Users.Find(query).Count();
+      if (count > 1)
+      {
+        var message = string.Format("there are more that one users with the same email: \"{0}\"", email);
+        throw new ApplicationException(message);
+      }
+      var result = count > 0;
+      return result;
+    }
+
     public User GetUserByEmail(string email)
     {
       email = email.ToLowerInvariant();
-      var query = Query<User>.EQ(u => u.Email.ToLowerInvariant(), email);
+      var query = Query<User>.EQ(u => u.Email, email);
       var result = Users.FindOne(query);
       return result;
     }
@@ -53,6 +68,15 @@ namespace Chat.BackendStorage
       user.PasswordSalt = new BsonBinaryData(passwordSalt);
       user.PasswordHash = new BsonBinaryData(passwordHash);
       Users.Insert(user);
+    }
+
+    public bool IsCredentialsValid(string email, string password)
+    {
+      var user = GetUserByEmail(email);
+      if (user == null)
+        return false;
+      var result = _securityManager.IsPasswordValid(user.PasswordSalt.AsByteArray, password, user.PasswordHash.AsByteArray);
+      return result;
     }
 
     private MongoDatabase ConnectToDatabase()

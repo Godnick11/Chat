@@ -5,19 +5,41 @@
     ViewBag.Title = "Welcome!";
 }
 
+@section Header
+{
+    <div class="navbar">
+        <div class="navbar-inner">
+        </div>
+    </div>
+}
+
 <div class="row">
-    <div class="span4 offset1">
-        @Html.ValidationSummary(excludePropertyErrors: true)
+    <div class="span4">
+        @Html.ValidationSummary(excludePropertyErrors: true, message: string.Empty, htmlAttributes: new { @class = "text-error" })
     </div>
 </div>
 
 <div class="row">
-    @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("RegisterNewUser", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
     {
         <div class="control-group">
-            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label", type = "email" })
+            @Html.LabelFor(m => m.FirstName, htmlAttributes: new { @class = "control-label" })
             <div class="controls">
-                @Html.TextBoxFor(m => m.Email, htmlAttributes: new { placeholder = "email" })
+                @Html.TextBoxFor(m => m.FirstName, htmlAttributes: new { placeholder = "first name" })
+            </div>
+            @Html.ValidationMessageFor(m => m.FirstName, validationMessage: string.Empty, htmlAttributes: new { @class = "text-error" })
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.LastName, htmlAttributes: new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(m => m.LastName, htmlAttributes: new { placeholder = "last name" })
+            </div>
+            @Html.ValidationMessageFor(m => m.LastName, validationMessage: string.Empty, htmlAttributes: new { @class = "text-error" })
+        </div>
+        <div class="control-group">
+            @Html.LabelFor(m => m.Email, htmlAttributes: new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(m => m.Email, htmlAttributes: new { placeholder = "email", type = "email" })
             </div>
             @Html.ValidationMessageFor(m => m.Email, validationMessage: string.Empty, htmlAttributes: new { @class = "text-error" })
         </div>
@@ -43,10 +65,4 @@
             </div>
         </div>
     }
-</div>
-
-<div class="row">
-    <div class="span4 offset1">
-        Don't have an account? <a href="@Url.Action("Register")">Register</a>!
-    </div>
 </div>

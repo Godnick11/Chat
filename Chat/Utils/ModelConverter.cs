@@ -9,7 +9,7 @@ namespace Chat.Utils
     {
       var result = new User
             {
-              Email = viewModel.Email,
+              Email = viewModel.Email.ToLowerInvariant(),
               FirstName = viewModel.FirstName,
               LastName = viewModel.LastName,
             };
