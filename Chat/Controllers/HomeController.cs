@@ -17,25 +17,6 @@ namespace Chat.Controllers
       _chatRepository = chatRepository;
     }
 
-#if DEBUG
-
-    [HttpGet]
-    public string Test()
-    {
-      var userData = new RegisterUserViewModel
-            {
-              Email = "pupkin@test.test",
-              Password = "password",
-              RepeatPassword = "password",
-              FirstName = "Vasya",
-              LastName = "Pupkin",
-            };
-      _chatRepository.AddNewUser(userData);
-      return "TEST";
-    }
-
-#endif
-
     [HttpGet]
     public ActionResult Index(LoginUserViewModel user)
     {
