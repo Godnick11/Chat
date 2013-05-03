@@ -3,7 +3,10 @@
 namespace Chat.App_Start
 {
   using Chat.BackendStorage;
+  using Chat.Hubs;
+  using Chat.Infrastructure;
   using Chat.Utils;
+  using Microsoft.AspNet.SignalR;
   using SimpleInjector;
   using SimpleInjector.Integration.Web.Mvc;
   using System.Reflection;
@@ -22,6 +25,7 @@ namespace Chat.App_Start
       container.RegisterMvcAttributeFilterProvider();
       container.Verify();
       DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
+      GlobalHost.DependencyResolver = new HubDependencyResolver(container);
     }
 
     private static void InitializeContainer(Container container)
@@ -29,6 +33,7 @@ namespace Chat.App_Start
       container.RegisterPerWebRequest<IConfigurationHelper, ConfigurationHelper>();
       container.RegisterPerWebRequest<ISecurityManager, SecurityManager>();
       container.RegisterPerWebRequest<IChatRepository, MongoChatRepository>();
+      container.RegisterPerWebRequest<ChatHub>();
     }
   }
 }

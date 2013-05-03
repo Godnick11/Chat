@@ -167,6 +167,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Infrastructure\HubDependencyResolver.cs" />
     <Compile Include="Utils\ISecurityManager.cs" />
     <Compile Include="Utils\ModelConverter.cs" />
     <Compile Include="Utils\SecurityManager.cs" />
