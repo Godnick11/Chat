@@ -12,14 +12,7 @@
 
 @section Header
 {
-    <div class="navbar">
-        <div class="navbar-inner">
-            @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
-            {
-                <button class="btn btn-info" type="submit">Logout</button>
-            }
-        </div>
-    </div>
+    @Html.Partial("NavigationBar")
 }
 
 <div class="row">

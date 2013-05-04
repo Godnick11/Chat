@@ -2,8 +2,7 @@
 
 namespace Chat.Controllers
 {
-  [Authorize]
-  public class ChatController : BaseController
+  public class AccountController : BaseController
   {
     [HttpGet]
     public ActionResult Index()

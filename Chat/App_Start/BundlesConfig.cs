@@ -23,11 +23,15 @@ namespace Chat
           .Include("~/Scripts/jquery.validate.js",
                   "~/Scripts/jquery.validate.unobtrusive.js");
 
+      var account = new ScriptBundle("~/bundles/account")
+          .Include("~/Scripts/account.js");
+
       bundles.Add(jquery);
       bundles.Add(bootstrapjs);
       bundles.Add(signalr);
       bundles.Add(chat);
       bundles.Add(jQueryUnobtrusiveValidation);
+      bundles.Add(account);
     }
   }
 }

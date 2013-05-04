@@ -1,0 +1,33 @@
+﻿@*@model *@
+
+@{
+    ViewBag.Title = "Account";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/account")
+}
+
+@section Header
+{
+    @Html.Partial("NavigationBar")
+}
+
+<form class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">first name</label>
+        <div class="controls">
+            <input id="firstName" type="text" />
+            <button id="saveFirstName" type="button" class="btn btn-success" onclick="">Save</button>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">last name</label>
+        <div class="controls">
+            <input id="lastName" type="text" />
+            <button id="saveLastName" type="button" class="btn btn-success" onclick="">Save</button>
+        </div>
+    </div>
+</form>

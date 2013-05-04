@@ -19,5 +19,8 @@ namespace Chat.BackendStorage.Entities
 
     [BsonRequired]
     public BsonBinaryData PasswordHash { set; get; }
+
+    [BsonIgnore]
+    public string FullName { get { return string.Format("{0} {1}", FirstName, LastName); } }
   }
 }

@@ -157,17 +157,23 @@
     <Compile Include="App_Start\BundlesConfig.cs" />
     <Compile Include="App_Start\SimpleInjectorInitializer.cs" />
     <Compile Include="BackendStorage\Entities\BaseEntity.cs" />
+    <Compile Include="BackendStorage\Entities\Message.cs" />
     <Compile Include="BackendStorage\Entities\User.cs" />
     <Compile Include="BackendStorage\IChatRepository.cs" />
     <Compile Include="BackendStorage\MongoChatRepository.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountSettingsController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\ChatHistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Infrastructure\HubDependencyResolver.cs" />
+    <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Utils\ISecurityManager.cs" />
     <Compile Include="Utils\ModelConverter.cs" />
     <Compile Include="Utils\SecurityManager.cs" />
@@ -292,6 +298,7 @@
     <Content Include="Content\less\accordion.less" />
     <Content Include="Content\custom.less" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\account.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.2.js" />
@@ -319,6 +326,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Shared\NavigationBar.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

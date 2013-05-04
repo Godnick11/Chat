@@ -6,6 +6,8 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Chat.BackendStorage
 {
@@ -14,6 +16,12 @@ namespace Chat.BackendStorage
     private readonly IConfigurationHelper _configurationHelper;
     private readonly ISecurityManager _securityManager;
     private readonly MongoDatabase _database;
+
+    static MongoChatRepository()
+    {
+      if (!BsonClassMap.IsClassMapRegistered(typeof(User))) BsonClassMap.RegisterClassMap<User>();
+      if (!BsonClassMap.IsClassMapRegistered(typeof(Message))) BsonClassMap.RegisterClassMap<Message>();
+    }
 
     private MongoCollection<User> Users
     {
@@ -24,10 +32,13 @@ namespace Chat.BackendStorage
       }
     }
 
-    static MongoChatRepository()
+    private MongoCollection<Message> Messages
     {
-      if (!BsonClassMap.IsClassMapRegistered(typeof(User)))
-        BsonClassMap.RegisterClassMap<User>();
+      get
+      {
+        var result = _database.GetCollection<Message>("messages");
+        return result;
+      }
     }
 
     public MongoChatRepository(IConfigurationHelper configurationHelper,
@@ -45,7 +56,7 @@ namespace Chat.BackendStorage
       var count = Users.Find(query).Count();
       if (count > 1)
       {
-        var message = string.Format("there are more that one users with the same email: \"{0}\"", email);
+        var message = string.Format("there are more that one user with the same email: \"{0}\"", email);
         throw new ApplicationException(message);
       }
       var result = count > 0;
@@ -77,6 +88,45 @@ namespace Chat.BackendStorage
         return false;
       var result = _securityManager.IsPasswordValid(user.PasswordSalt.AsByteArray, password, user.PasswordHash.AsByteArray);
       return result;
+    }
+
+    public Message SaveMessage(string userEmail, string messageBody)
+    {
+      var user = GetUserByEmail(userEmail);
+      if (user == null)
+      {
+        var errorMessage = string.Format("failed to find user with email \"{0}\"", userEmail);
+        throw new ApplicationException(errorMessage);
+      }
+      var message = new Message { WhoPosted = user.FullName, WhenPosted = DateTime.Now, Text = messageBody };
+      Messages.Insert(message);
+      return message;
+    }
+
+    public IEnumerable<Message> GetLastMessages(int messageCount)
+    {
+      if (messageCount <= 0)
+      {
+        var errorMessage = string.Format("wrong messageCount: \"{0}\"", messageCount);
+        throw new ArgumentException(errorMessage);
+      }
+      var result = Messages
+            .FindAll()
+            .SetSortOrder(SortBy<Message>.Descending(m => m.WhenPosted))
+            .Take(messageCount)
+            .Reverse()
+            .ToList();
+      return result;
+    }
+
+    public void UpdateUser(User user)
+    {
+      if (user.Id == null || user.Id == BsonObjectId.Empty)
+      {
+        var errorMessage = string.Format("user id is not defined: \"{0}\"", user.Id);
+        throw new ArgumentException(errorMessage);
+      }
+      Users.Save(user);
     }
 
     private MongoDatabase ConnectToDatabase()

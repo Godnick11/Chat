@@ -1,0 +1,12 @@
+﻿<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="@Url.Action("Index", "Chat")">Chat</a></li>
+            <li><a href="@Url.Action("Index", "Account")">Account</a></li>
+        </ul>
+        @using (Html.BeginForm("Logout", "Home", FormMethod.Post))
+        {
+            <button class="btn btn-info pull-right" type="submit">Logout</button>
+        }
+    </div>
+</div>

@@ -15,5 +15,11 @@ namespace Chat.Utils
             };
       return result;
     }
+
+    public static ChatMessage ToViewModel(this Message entity)
+    {
+      var result = new ChatMessage { Text = entity.Text, WhenPosted = entity.WhenPosted, WhoPosted = entity.WhoPosted };
+      return result;
+    }
   }
 }

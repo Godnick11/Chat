@@ -8,7 +8,7 @@ using System.Web.UI;
 
 namespace Chat.Controllers
 {
-  public class HomeController : Controller
+  public class HomeController : BaseController
   {
     private readonly IChatRepository _chatRepository;
 
@@ -27,14 +27,12 @@ namespace Chat.Controllers
     public ActionResult Login(LoginUserViewModel user)
     {
       if (!ModelState.IsValid)
-        return RedirectToAction("Index", new { user = user });
-
+        return View("Index", user);
       if (!_chatRepository.IsCredentialsValid(user.Email, user.Password))
       {
         ModelState.AddModelError(string.Empty, "email/password pair is not valid");
-        return RedirectToAction("Index", new { user = user });
+        return View("Index", user);
       }
-
       AuthorizeUser(user.Email, user.RememberMe);
       return RedirectToAction("Index", "Chat");
     }
@@ -56,16 +54,16 @@ namespace Chat.Controllers
     public ActionResult RegisterNewUser(RegisterUserViewModel user)
     {
       if (!ModelState.IsValid)
-        return RedirectToAction("Register", new { user = user });
+        return View("Register", user);
       if (!string.Equals(user.Password, user.RepeatPassword))
       {
         ModelState.AddModelError(string.Empty, "passwords don't match");
-        return RedirectToAction("Register", new { user = user });
+        return View("Register", user);
       }
       if (_chatRepository.IsUserRegistered(user.Email))
       {
         ModelState.AddModelError("Email", "the email is not available");
-        return RedirectToAction("Register", new { user = user });
+        return View("Register", user);
       }
       _chatRepository.AddNewUser(user);
       AuthorizeUser(user.Email, user.RememberMe);
