@@ -2,8 +2,12 @@
 /// <reference path="jquery.signalR-1.0.1.js" />
 /// <reference path="jquery-ui-1.10.2.js" />
 $(function () {
+    var htmlEncode = function (value) {
+        return $('<div/>').text(value).html();
+    }
+
     var addMessage = function (message) {
-        $("#messages").prepend('<li><b>' + message.WhoPosted + '</b>: ' + message.Text + '</li>');
+        $("#messages").prepend('<li><b>' + htmlEncode(message.WhoPosted) + '</b>: ' + htmlEncode(message.Text) + '</li>');
     };
 
     $.getJSON("api/ChatHistory/GetLastMessages", { messageCount: 10 }, function (data) {
