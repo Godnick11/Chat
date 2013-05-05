@@ -1,7 +1,9 @@
 ﻿using Chat.BackendStorage;
+using Chat.Models;
 using Chat.Utils;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using Microsoft.Security.Application;
 using System.Web;
 
 namespace Chat.Hubs
@@ -28,7 +30,15 @@ namespace Chat.Hubs
     public void Send(string message)
     {
       var savedMessage = _chatRepository.SaveMessage(CurrentUserEmail, message);
-      Clients.All.addMessage(savedMessage.ToViewModel());
+      var savedMessageToSend = savedMessage.ToViewModel();
+      SanitizeMessage(savedMessageToSend);
+      Clients.All.addMessage(savedMessageToSend);
+    }
+
+    private void SanitizeMessage(ChatMessage message)
+    {
+      message.Text = Encoder.HtmlEncode(message.Text);
+      message.WhoPosted = Encoder.HtmlEncode(message.WhoPosted);
     }
   }
 }

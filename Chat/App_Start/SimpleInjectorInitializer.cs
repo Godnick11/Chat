@@ -30,10 +30,10 @@ namespace Chat.App_Start
 
     private static void InitializeContainer(Container container)
     {
-      container.RegisterPerWebRequest<IConfigurationHelper, ConfigurationHelper>();
-      container.RegisterPerWebRequest<ISecurityManager, SecurityManager>();
-      container.RegisterPerWebRequest<IChatRepository, MongoChatRepository>();
-      container.RegisterPerWebRequest<ChatHub>();
+      container.Register<IConfigurationHelper, ConfigurationHelper>();
+      container.Register<ISecurityManager, SecurityManager>();
+      container.Register<IChatRepository, MongoChatRepository>();
+      container.Register<ChatHub>();
     }
   }
 }
